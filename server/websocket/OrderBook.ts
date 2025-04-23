@@ -61,7 +61,6 @@ function init(callback: (bids: IStoreOrder[], asks: IStoreOrder[]) => void) {
           `當前序號與上次序號不一致 \n current: ${currentSequence} \n prev: ${data.data.prevSeqNum}`
         );
       }
-      console.log("get data with Order Book:", data);
 
       currentSequence = data.data.seqNum;
       solveSocketRawData(data.data.bids, storeBids);
