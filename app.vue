@@ -225,11 +225,11 @@ onUnmounted(() => {
     }
 
     &--buy {
-      background-color: variables.$BuyQuoteAccumulativeTotalSizeBarColor;
+      background-color: variables.$buyQuoteAccumulativeTotalSizeBarColor;
     }
 
     &--sell {
-      background-color: variables.$SellQuoteAccumulativeTotalSizeBarColor;
+      background-color: variables.$sellQuoteAccumulativeTotalSizeBarColor;
     }
   }
 
@@ -256,7 +256,7 @@ onUnmounted(() => {
     background-color: #0000;
   }
   15% {
-    background-color: variables.$AnimationFlashGreenBackgroundColor;
+    background-color: variables.$animationFlashGreenBackgroundColor;
   }
   100% {
     background-color: #0000;
@@ -267,7 +267,7 @@ onUnmounted(() => {
     background-color: #0000;
   }
   15% {
-    background-color: variables.$AnimationFlashRedBackgroundColor;
+    background-color: variables.$animationFlashRedBackgroundColor;
   }
   100% {
     background-color: #0000;

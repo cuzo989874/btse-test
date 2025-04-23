@@ -39,7 +39,7 @@ function init(callback: (bids: IStoreOrder[], asks: IStoreOrder[]) => void) {
     subscribe();
   };
   _socket.onclose = () => {
-    console.log("Order Book socket Closed.");
+    console.log("Order Book socket closed.");
   };
   _socket.onerror = (error) => {
     console.error("Order Book socket error:", error);

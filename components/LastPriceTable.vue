@@ -60,12 +60,12 @@ onUnmounted(() => {
 
   &--greater {
     color: variables.$buyQuotePriceTextColor;
-    background-color: variables.$BuyQuoteAccumulativeTotalSizeBarColor;
+    background-color: variables.$buyQuoteAccumulativeTotalSizeBarColor;
   }
 
   &--less {
     color: variables.$sellQuotePriceTextColor;
-    background-color: variables.$SellQuoteAccumulativeTotalSizeBarColor;
+    background-color: variables.$sellQuoteAccumulativeTotalSizeBarColor;
   }
 
   &__content {

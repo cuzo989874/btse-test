@@ -54,8 +54,8 @@ function init(
         data.data[0].price === _previousPrice
           ? "equal"
           : data.data[0].price > _previousPrice
-          ? "greater"
-          : "less"
+            ? "greater"
+            : "less"
       );
       _previousPrice = data.data[0].price;
     } catch (err) {
