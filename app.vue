@@ -243,10 +243,10 @@ onUnmounted(() => {
   }
   .size {
     &--greater {
-      animation: ease-in-out FlashGreenBg 0.3s;
+      animation: ease-in-out FlashGreenBg 0.5s;
     }
     &--less {
-      animation: ease-in-out FlashRedBg 0.3s;
+      animation: ease-in-out FlashRedBg 0.5s;
     }
   }
 }
