@@ -184,8 +184,25 @@ onUnmounted(() => {
   }
 
   tbody .cell {
+    position: relative;
     cursor: pointer;
+    z-index: 1;
     font-weight: 600;
+  }
+
+  tbody > tr {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transition: background-color .2s;
+    }
+
+    &:hover::after {
+      background-color: variables.$quoteRowHoverBackgroundColor;
+    }
   }
 
   .cell {
@@ -214,9 +231,6 @@ onUnmounted(() => {
     &--sell {
       background-color: variables.$SellQuoteAccumulativeTotalSizeBarColor;
     }
-  }
-  &__body > tr {
-    position: relative;
   }
 
   .new-order {
