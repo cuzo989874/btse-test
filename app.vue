@@ -40,33 +40,7 @@
           </td>
         </tr>
       </tbody>
-      <tbody>
-        <tr>
-          <td colspan="3">
-            <div class="last-price" :class="`last-price--${lastPriceCompare}`">
-              <div class="last-price__content">
-                <formattedNumber
-                  v-if="lastPriceAmount"
-                  :value="lastPriceAmount"
-                  :digits="1"
-                />
-                <img
-                  v-if="lastPriceCompare === 'greater'"
-                  src="~/public/arrow_upward.svg"
-                  alt="Arrow Upward"
-                  width="16px"
-                >
-                <img
-                  v-else-if="lastPriceCompare === 'less'"
-                  src="~/public/arrow_downward.svg"
-                  alt="Arrow Downward"
-                  width="16px"
-                >
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
+      <last-price-table />
       <tbody>
         <tr
           v-for="(
@@ -103,11 +77,11 @@
 </template>
 <script lang="ts" setup>
 import OrderBook from "./server/websocket/OrderBook";
-import LastPrice from "./server/websocket/LastPrice";
+
+import type IStoreOrder from "./shared/interface/IStoreOrder";
 
 import FormattedNumber from "./components/FormattedNumber.vue";
-import type IStoreOrder from "./shared/interface/IStoreOrder";
-import type TCompareStatus from "./shared/type/TCompareStatus";
+import LastPriceTable from "./components/LastPriceTable.vue";
 
 interface IOrder extends IStoreOrder {
   dependencySum: number;
@@ -118,9 +92,6 @@ const showLimit = 8;
 
 const bidsWithSum = ref<IOrder[]>([]);
 const asksWithSum = ref<IOrder[]>([]);
-
-const lastPriceAmount = ref(0);
-const lastPriceCompare = ref<TCompareStatus>("equal");
 
 OrderBook.init((storeBids, storeAsks) => {
   const shortStoreBids = storeBids.slice(0, showLimit);
@@ -157,10 +128,6 @@ OrderBook.init((storeBids, storeAsks) => {
     }
   );
 });
-LastPrice.init((price, compare) => {
-  lastPriceAmount.value = price;
-  lastPriceCompare.value = compare;
-});
 
 function sum(entries: IStoreOrder[]) {
   return entries.reduce((acc, { size }) => {
@@ -170,21 +137,10 @@ function sum(entries: IStoreOrder[]) {
 
 onUnmounted(() => {
   OrderBook.close();
-  LastPrice.close();
 });
 </script>
 <style lang="scss">
-$gap: 8px;
-$backgroundColor: #131b29;
-$defaultTextColor: #f0f4f8;
-$quoteTableHeadTextColor: #8698aa;
-$buyQuotePriceTextColor: #00b15d;
-$sellQuotePriceTextColor: #ff5b5a;
-$quoteRowHoverBackgroundColor: #1e3059;
-$BuyQuoteAccumulativeTotalSizeBarColor: rgba($buyQuotePriceTextColor, 0.12);
-$SellQuoteAccumulativeTotalSizeBarColor: rgba($sellQuotePriceTextColor, 0.12);
-$AnimationFlashGreenBackgroundColor: rgba($buyQuotePriceTextColor, 0.5);
-$AnimationFlashRedBackgroundColor: rgba($sellQuotePriceTextColor, 0.5);
+@use "~/assets/style/variables";
 
 .text-left {
   text-align: left;
@@ -195,21 +151,21 @@ $AnimationFlashRedBackgroundColor: rgba($sellQuotePriceTextColor, 0.5);
 }
 
 .text-buy {
-  color: $buyQuotePriceTextColor;
+  color: variables.$buyQuotePriceTextColor;
 }
 
 .text-sell {
-  color: $sellQuotePriceTextColor;
+  color: variables.$sellQuotePriceTextColor;
 }
 
 .order-book {
-  background-color: $backgroundColor;
-  color: $defaultTextColor;
+  background-color: variables.$backgroundColor;
+  color: variables.$defaultTextColor;
   max-width: 320px;
   margin: auto;
 
   &__header {
-    padding: $gap;
+    padding: variables.$gap;
     border-bottom: 1px solid rgba(white, 0.12);
     font-weight: 600;
   }
@@ -217,13 +173,13 @@ $AnimationFlashRedBackgroundColor: rgba($sellQuotePriceTextColor, 0.5);
 
 .quote-table {
   width: 100%;
-  background-color: $backgroundColor;
-  color: $defaultTextColor;
+  background-color: variables.$backgroundColor;
+  color: variables.$defaultTextColor;
   font-size: 0.75em;
   border-spacing: 0;
 
   thead {
-    color: $quoteTableHeadTextColor;
+    color: variables.$quoteTableHeadTextColor;
     font-weight: bold;
   }
 
@@ -235,7 +191,7 @@ $AnimationFlashRedBackgroundColor: rgba($sellQuotePriceTextColor, 0.5);
   .cell {
     position: relative;
     width: calc(100% / 3);
-    padding: calc($gap / 2) $gap;
+    padding: calc(variables.$gap / 2) variables.$gap;
     border: 0;
   }
 
@@ -252,11 +208,11 @@ $AnimationFlashRedBackgroundColor: rgba($sellQuotePriceTextColor, 0.5);
     }
 
     &--buy {
-      background-color: $BuyQuoteAccumulativeTotalSizeBarColor;
+      background-color: variables.$BuyQuoteAccumulativeTotalSizeBarColor;
     }
 
     &--sell {
-      background-color: $SellQuoteAccumulativeTotalSizeBarColor;
+      background-color: variables.$SellQuoteAccumulativeTotalSizeBarColor;
     }
   }
   &__body > tr {
@@ -281,46 +237,12 @@ $AnimationFlashRedBackgroundColor: rgba($sellQuotePriceTextColor, 0.5);
   }
 }
 
-.last-price {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: calc(2ex + $gap * 1.5);
-  background-color: rgba($quoteTableHeadTextColor, 0.12);
-  padding: 0 calc($gap / 2);
-  font-size: 1.4em;
-  font-weight: bold;
-
-  &--greater {
-    color: $buyQuotePriceTextColor;
-    background-color: $BuyQuoteAccumulativeTotalSizeBarColor;
-  }
-
-  &--less {
-    color: $sellQuotePriceTextColor;
-    background-color: $SellQuoteAccumulativeTotalSizeBarColor;
-  }
-
-  &__content {
-    position: relative;
-    display: flex;
-
-    & > img {
-      position: absolute;
-      right: calc(-16px - $gap / 2);
-      top: calc(50% - 8px);
-    }
-  }
-}
-
 @keyframes FlashGreenBg {
   0% {
     background-color: #0000;
   }
   15% {
-    background-color: $AnimationFlashGreenBackgroundColor;
+    background-color: variables.$AnimationFlashGreenBackgroundColor;
   }
   100% {
     background-color: #0000;
@@ -331,7 +253,7 @@ $AnimationFlashRedBackgroundColor: rgba($sellQuotePriceTextColor, 0.5);
     background-color: #0000;
   }
   15% {
-    background-color: $AnimationFlashRedBackgroundColor;
+    background-color: variables.$AnimationFlashRedBackgroundColor;
   }
   100% {
     background-color: #0000;

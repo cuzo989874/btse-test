@@ -1,0 +1,11 @@
+$gap: 8px;
+$backgroundColor: #131b29;
+$defaultTextColor: #f0f4f8;
+$quoteTableHeadTextColor: #8698aa;
+$buyQuotePriceTextColor: #00b15d;
+$sellQuotePriceTextColor: #ff5b5a;
+$quoteRowHoverBackgroundColor: #1e3059;
+$BuyQuoteAccumulativeTotalSizeBarColor: rgba($buyQuotePriceTextColor, 0.12);
+$SellQuoteAccumulativeTotalSizeBarColor: rgba($sellQuotePriceTextColor, 0.12);
+$AnimationFlashGreenBackgroundColor: rgba($buyQuotePriceTextColor, 0.5);
+$AnimationFlashRedBackgroundColor: rgba($sellQuotePriceTextColor, 0.5);
