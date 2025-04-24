@@ -162,7 +162,8 @@ onUnmounted(() => {
   background-color: variables.$backgroundColor;
   color: variables.$defaultTextColor;
   max-width: 320px;
-  margin: auto;
+  margin: 64px auto;
+  box-shadow: 0px 0px 16px 16px variables.$backgroundColor;
 
   &__header {
     padding: variables.$gap;

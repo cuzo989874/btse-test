@@ -1,0 +1,15 @@
+@use "sass:color";
+@use "./variables";
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+ background-color: color.adjust(variables.$backgroundColor, $lightness: -5%); 
+}
