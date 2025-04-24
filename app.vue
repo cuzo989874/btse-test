@@ -88,20 +88,16 @@ interface IOrder extends IStoreOrder {
   dependencyPercentage: number;
 }
 
-const showLimit = 8;
-
 const bidsWithSum = ref<IOrder[]>([]);
 const asksWithSum = ref<IOrder[]>([]);
 
 OrderBook.init((storeBids, storeAsks) => {
-  const shortStoreBids = storeBids.slice(0, showLimit);
-  const accBids = sum(shortStoreBids);
-  const shortStoreAsks = storeAsks.slice(0, showLimit);
-  const accAsks = sum(shortStoreAsks);
+  const accBids = sum(storeBids);
+  const accAsks = sum(storeAsks);
 
-  bidsWithSum.value = shortStoreBids.map(
+  bidsWithSum.value = storeBids.map(
     ({ price, size, isNew, sizeCompare }, index) => {
-      const sumAbove = sum(shortStoreBids.slice(0, index + 1));
+      const sumAbove = sum(storeBids.slice(0, index + 1));
 
       return {
         price,
@@ -113,9 +109,9 @@ OrderBook.init((storeBids, storeAsks) => {
       };
     }
   );
-  asksWithSum.value = shortStoreAsks.map(
+  asksWithSum.value = storeAsks.map(
     ({ price, size, isNew, sizeCompare }, index) => {
-      const sumBelow = sum(shortStoreAsks.slice(index, showLimit));
+      const sumBelow = sum(storeAsks.slice(index, storeAsks.length));
 
       return {
         price,

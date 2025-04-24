@@ -15,7 +15,7 @@ interface IOrderBookWebSocketEvent extends IBTSEWebSocketEvent {
   };
 }
 
-const MAX_STORE_LENGTH = 2000;
+const MAX_STORE_LENGTH = 8;
 
 let _socket: WebSocket | null;
 let currentSequence = NaN;
