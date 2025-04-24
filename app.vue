@@ -9,7 +9,7 @@
           <th class="cell text-right">Total</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="quote-table__body">
         <tr
           v-for="(
             {
@@ -41,7 +41,7 @@
         </tr>
       </tbody>
       <last-price-table />
-      <tbody>
+      <tbody class="quote-table__body">
         <tr
           v-for="(
             {
@@ -191,7 +191,7 @@ onUnmounted(() => {
     font-weight: 600;
   }
 
-  tbody > tr {
+  &__body > tr {
     position: relative;
 
     &::after {
