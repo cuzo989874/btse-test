@@ -2,6 +2,8 @@
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+live demo: [https://cuzo989874.github.io/BTSE-test](https://cuzo989874.github.io/BTSE-test)
+
 ## Setup
 
 Make sure to install dependencies:

@@ -8,5 +8,10 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/test-utils',
-  ]
+  ],
+  
+  app: {
+    baseURL: '/BTSE-test',
+    buildAssetsDir: "/nuxt/"
+  }
 })
